@@ -1,7 +1,7 @@
 import React from 'react';
 
 class ComboBox extends React.Component {
-    state = { categories: [], isLoading: true };
+    state = { categories: [] };
     
     
     componentDidMount() {
@@ -14,7 +14,7 @@ class ComboBox extends React.Component {
                     {display: category}
                 );
             })
-            this.setState({ categories: [{display: 'Select category'}].concat(categoriesFromApi), isLoading: false });
+            this.setState({ categories: [{display: 'Select category'}].concat(categoriesFromApi) });
 
         }).catch(error => {
             console.log(error);

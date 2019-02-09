@@ -5,18 +5,20 @@ import ComboBox from './components/ComboBox';
 import LoadingScreen from './components/LoadingScreen';
 
 class App extends React.Component {
-    state = { joke:'', icon:'', category:'', isLoading: true };
+    state = { joke:'', icon:'', category:'', isLoading: false };
 
     onButtonClick = async () => {
+        this.setState({ isLoading: true});
+
         let category = this.state.category;
         
         const response = await norris.get('/jokes/random?category=' + category);
         
-        this.setState({ joke: response.data.value, icon: response.data.icon_url });
+        this.setState({ joke: response.data.value, icon: response.data.icon_url, isLoading: false });
     }
 
     componentDidMount() {
-        this.setState({ isLoading: false })
+        //this.setState({ isLoading: true })
     }
 
     handleChange(event) {
@@ -28,36 +30,41 @@ class App extends React.Component {
         if (this.state.isLoading === true) {
             return (
                 <div className="ui container">
-                    <LoadingScreen />
+                    <div className="ui segment">
+                        <LoadingScreen />
+                    </div>
+                </div>
+            );
+        } else {
+            return (
+                <div className="contenido">
+
+                    <div className="ui container">
+                        <div className="ui segment">
+                            <h1>Chuck Norris jokes</h1>
+
+                            <div className="ui divider" />
+
+                            <div className="combobox" style={{textAlign: "center"}} >
+                                <ComboBox handleChange={this.handleChange.bind(this)}/>
+                            </div>
+                            <br></br>
+                            <button className="ui primary button" onClick={this.onButtonClick} style={{ width: '100%' }}>
+                                Bring me a joke!
+                            </button>
+                            
+                            <div className="ui divider" />
+
+                            <div className="joke">
+                                <div className="joke icon"><img src={this.state.icon} alt="" /></div>
+                                <div className="joke text">{this.state.joke}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             );
         }
-
-        return (
-            <div className="contenido">
-
-                <div className="ui container">
-                    <div className="ui segment">
-                        <h1>Chuck Norris jokes</h1>
-                        <div className="ui divider" />
-                        <div className="combobox" style={{textAlign: "center"}} >
-                            <ComboBox handleChange={this.handleChange.bind(this)}/>
-                        </div>
-                        <br></br>
-                        <button className="ui primary button" onClick={this.onButtonClick} style={{ width: '100%' }}>
-                            Bring me a joke!
-                        </button>
-
-                        <div className="ui divider" />
-                        <div className="joke">
-                            <div className="joke icon"><img src={this.state.icon} alt="" /></div>
-                            <div className="joke text">{this.state.joke}</div>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        );
     }
 
     render() {
