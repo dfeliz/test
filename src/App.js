@@ -21,46 +21,49 @@ class App extends React.Component {
         this.setState({ category: event.target.options[event.target.selectedIndex].text });
     }
 
-    renderContent() {
-
-        if (this.state.isLoading === true) {
+    actualContent() {
+        if (this.state.isLoading) {
             return (
-                <div className="ui container">
-                    <div className="ui segment">
-                        <LoadingScreen />
-                    </div>
-                </div>
+                <LoadingScreen />
             );
         } else {
             return (
-                <div className="contenido">
-
-                    <div className="ui container">
-                        <div className="ui segment">
-                            <h1>Chuck Norris jokes</h1>
-
-                            <div className="ui divider" />
-
-                            <div className="combobox" style={{textAlign: "center"}} >
-                                <ComboBox handleChange={this.handleChange.bind(this)}/>
-                            </div>
-                            <br></br>
-                            <button className="ui primary button" onClick={this.onButtonClick} style={{ width: '100%' }}>
-                                Bring me a joke!
-                            </button>
-                            
-                            <div className="ui divider" />
-
-                            <div className="joke">
-                                <div className="joke icon"><img src={this.state.icon} alt="" /></div>
-                                <div className="joke text">{this.state.joke}</div>
-                            </div>
-                        </div>
-                    </div>
-                    
+                <div className="joke">
+                    <div className="joke icon"><img src={this.state.icon} alt="" /></div>
+                    <div className="joke text">{this.state.joke}</div>
                 </div>
             );
         }
+    }
+
+    renderContent() {
+        return (
+            <div className="contenido">
+
+                <div className="ui container">
+                    <div className="ui segment">
+                        <h1>Chuck Norris jokes</h1>
+
+                        <div className="ui divider" />
+
+                        <div className="combobox" style={{textAlign: "center"}} >
+                            <ComboBox handleChange={this.handleChange.bind(this)}/>
+                        </div>
+                        <br></br>
+                        <button className="ui primary button" onClick={this.onButtonClick} style={{ width: '100%' }}>
+                            Bring me a joke!
+                        </button>
+                        
+                        <div className="ui divider" />
+
+                        <div className="bottom">
+                            {this.actualContent()}
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        );
     }
 
     render() {
