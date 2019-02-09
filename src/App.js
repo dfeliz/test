@@ -17,10 +17,6 @@ class App extends React.Component {
         this.setState({ joke: response.data.value, icon: response.data.icon_url, isLoading: false });
     }
 
-    componentDidMount() {
-        //this.setState({ isLoading: true })
-    }
-
     handleChange(event) {
         this.setState({ category: event.target.options[event.target.selectedIndex].text });
     }
