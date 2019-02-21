@@ -1,8 +1,8 @@
 import React from 'react';
-import './App.css';
-import norris from './components/norris';
-import ComboBox from './components/ComboBox';
-import LoadingScreen from './components/LoadingScreen';
+import '../styles/App.css';
+import norris from '../apis/norris';
+import ComboBox from './ComboBox';
+import LoadingScreen from './LoadingScreen';
 
 class App extends React.Component {
     state = { joke:'', icon:'', category:'', isLoading: false };
